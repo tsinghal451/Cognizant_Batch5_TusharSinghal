@@ -42,7 +42,7 @@ Multi-Page E-Learning Platform/
 ├── tests/
 │   └── logic.test.js      # Jest unit tests (Logic validation)
 ├── Courses.html           # Dynamic catalog & curriculum
-├── Dashboard.html         # User analytics & stats
+├── index.html             # User analytics & stats
 ├── Profile.html           # User record & achievements
 ├── Quiz.html              # Dynamic assessment engine
 ├── package.json           # Environment & test configuration
@@ -58,7 +58,7 @@ Multi-Page E-Learning Platform/
 
 ### Setup & Execution
 
-1.  Clone the repository and open `Dashboard.html` to start the learning journey.
+1.  Clone the repository and open `index.html` to start the learning journey.
 2.  The system runs entirely **client-side**, requiring no server setup for immediate evaluation.
 
 ### Logic Validation (Tests)
