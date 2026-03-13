@@ -112,7 +112,7 @@
               </p>
 
               <h3 style="margin-bottom: 1.5rem">Curriculum</h3>
-              <div id="lesson-list"></div>
+              <ol id="lesson-list" style="list-style: none; padding: 0;"></ol>
             </div>
 
             <div style="position: sticky; top: 120px; align-self: start">
@@ -235,7 +235,7 @@
 
         course.lessons.forEach((lesson, index) => {
           const isDone = isLessonCompleted(course.id, index);
-          const item = document.createElement("div");
+          const item = document.createElement("li");
           item.className = `lesson-item ${isDone ? "completed" : ""}`;
           item.innerHTML = `
                     <div style="display: flex; align-items: center; gap: 1rem;">
