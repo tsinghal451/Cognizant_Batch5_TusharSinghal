@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz | LearnerPro</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .quiz-max-width {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .option-btn {
+            display: block;
+            width: 100%;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            color: var(--text-primary);
+            text-align: left;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        .option-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary);
+        }
+        .option-btn.selected {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+            color: white;
+        }
+        .result-container {
+            text-align: center;
+            padding: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container navbar">
+            <a href="Dashboard.html" class="navbar-brand">LearnerPro</a>
+            <ul class="nav-links">
+                <li><a href="Dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="Courses.html" class="nav-link">Courses</a></li>
+                <li><a href="Quiz.html" class="nav-link active">Quiz</a></li>
+                <li><a href="Profile.html" class="nav-link">Profile</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="breadcrumb-container container">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="Dashboard.html">Dashboard</a></li>
+            <li class="breadcrumb-item active">Quiz</li>
+        </ul>
+    </div>
+
+    <main class="container py-4">
+        <section class="quiz-max-width animate-in">
+            <h1 style="text-align: center; margin-bottom: 3rem; font-size: 3rem;">Assessment</h1>
+            
+            <!-- Loader -->
+            <div id="quiz-loader" style="text-align: center; padding: 5rem;">
+                <div style="width: 50px; height: 50px; border: 4px solid var(--border-light); border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1.5rem;"></div>
+                <p style="color: var(--text-muted);">Generating your personalized assessment...</p>
+            </div>
+
+            <!-- Quiz UI -->
+            <div id="quiz-container" class="glass-card" style="display: none;">
+                <div id="question-area">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <span class="category-badge" id="question-index-badge">Question 1</span>
+                        <span style="font-size: 0.875rem; color: var(--text-muted);" id="question-progress-text">1 of 5</span>
+                    </div>
+                    <h2 id="question-title" style="margin-bottom: 2rem; font-size: 1.75rem;">Question Text</h2>
+                    <div id="options-area">
+                        <!-- Options filled by JS -->
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: flex-end; margin-top: 3rem;">
+                    <button class="btn btn-primary" id="next-btn" onclick="handleNext()" disabled>Proceed to Next</button>
+                </div>
+            </div>
+
+            <!-- Result Area -->
+            <div id="result-area" class="glass-card result-container" style="display: none;">
+                <h2 style="font-size: 3rem; margin-bottom: 1rem;" id="result-title">Result</h2>
+                <div id="result-score" style="font-size: 6rem; font-weight: 800; color: var(--primary); margin-bottom: 1.5rem;">0%</div>
+                <p id="result-msg" style="color: var(--text-secondary); margin-bottom: 2.5rem; font-size: 1.125rem;">Message</p>
+                
+                <div class="glass-card" style="background: rgba(255,255,255,0.02); border: none; padding: 2rem; margin-bottom: 3rem;">
+                    <p id="performance-feedback" style="font-weight: 600; color: var(--accent); margin: 0;"></p>
+                </div>
+
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <a href="Dashboard.html" class="btn btn-primary">Go to Dashboard</a>
+                    <button onclick="location.reload()" class="btn btn-outline">Try Assessment Again</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <style>
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+
+    <footer>
+        <div class="container text-center">
+            <p>&copy; 2026 LearnerPro Ultra-Premium. Data-driven learning.</p>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/logic.js"></script>
+    <script>
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let selectedAnswer = null;
+
+        async function initQuiz() {
+            // Fake delay for elite feel
+            setTimeout(() => {
+                document.getElementById('quiz-loader').style.display = 'none';
+                document.getElementById('quiz-container').style.display = 'block';
+                renderQuestion();
+            }, 1500);
+        }
+
+        function renderQuestion() {
+            const question = quizQuestions[currentQuestionIndex];
+            document.getElementById('question-title').innerText = question.question;
+            document.getElementById('question-index-badge').innerText = `Module ${currentQuestionIndex + 1}`;
+            document.getElementById('question-progress-text').innerText = `${currentQuestionIndex + 1} of ${quizQuestions.length}`;
+            
+            const optionsArea = document.getElementById('options-area');
+            optionsArea.innerHTML = '';
+            
+            question.options.forEach(option => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = option;
+                btn.onclick = () => selectOption(btn, option);
+                optionsArea.appendChild(btn);
+            });
+
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.disabled = true;
+            nextBtn.innerText = currentQuestionIndex === quizQuestions.length - 1 ? 'Finish Assessment' : 'Proceed to Next';
+        }
+
+        function selectOption(btn, option) {
+            document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedAnswer = option;
+            document.getElementById('next-btn').disabled = false;
+        }
+
+        function handleNext() {
+            userAnswers.push(selectedAnswer);
+            selectedAnswer = null;
+
+            if (currentQuestionIndex < quizQuestions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const score = calculateScore(userAnswers, quizQuestions);
+            const percentage = calculatePercentage(score, quizQuestions.length);
+            const result = determinePassFail(percentage);
+            const feedback = getPerformanceFeedback(percentage);
+
+            const state = loadState();
+            state.quizResults.push({
+                date: new Date().toLocaleDateString(),
+                score,
+                total: quizQuestions.length,
+                percentage
+            });
+            saveState(state);
+
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('result-area').style.display = 'block';
+            
+            const scoreDisplay = document.getElementById('result-score');
+            scoreDisplay.innerText = `${Math.round(percentage)}%`;
+            scoreDisplay.style.color = result.passed ? 'var(--success)' : 'var(--secondary)';
+            
+            document.getElementById('result-title').innerText = result.passed ? 'Achievement Unlocked' : 'Assessment Failed';
+            document.getElementById('result-msg').innerText = result.message;
+            document.getElementById('performance-feedback').innerText = feedback;
+        }
+
+        initQuiz();
+    </script>
+</body>
+</html>

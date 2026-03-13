@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Courses | LearnerPro</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .lesson-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border-light);
+        border-radius: 16px;
+        margin-bottom: 0.75rem;
+        transition: all 0.3s ease;
+      }
+      .lesson-item:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: var(--primary);
+      }
+      .lesson-item.completed {
+        border-color: var(--success);
+        background: rgba(16, 185, 129, 0.05);
+      }
+      .lesson-item.completed .lesson-title {
+        text-decoration: line-through;
+        opacity: 0.5;
+      }
+      .course-details-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        color: var(--text-primary);
+      }
+      th {
+        text-align: left;
+        padding: 1rem;
+        font-family: "Outfit", sans-serif;
+        color: var(--text-secondary);
+        border-bottom: 1px solid var(--border-light);
+      }
+      td {
+        padding: 1rem;
+        border-bottom: 1px solid var(--border-light);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container navbar">
+        <a href="Dashboard.html" class="navbar-brand">LearnerPro</a>
+        <ul class="nav-links">
+          <li><a href="Dashboard.html" class="nav-link">Dashboard</a></li>
+          <li><a href="Courses.html" class="nav-link active">Courses</a></li>
+          <li><a href="Quiz.html" class="nav-link">Quiz</a></li>
+          <li><a href="Profile.html" class="nav-link">Profile</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <div class="breadcrumb-container container">
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="Dashboard.html">Dashboard</a></li>
+        <li class="breadcrumb-item active">Courses</li>
+      </ul>
+    </div>
+
+    <main class="container py-4">
+      <section class="animate-in">
+        <h1 style="font-size: 3rem; margin-bottom: 2rem">Course Catalog</h1>
+
+        <div
+          class="glass-card"
+          style="padding: 0; overflow: hidden; margin-bottom: 3rem"
+        >
+          <table>
+            <thead>
+              <tr>
+                <th style="padding-left: 2rem">Course Details</th>
+                <th>Category</th>
+                <th>Modules</th>
+                <th style="text-align: right; padding-right: 2rem">Action</th>
+              </tr>
+            </thead>
+            <tbody id="course-table-body"></tbody>
+          </table>
+        </div>
+
+        <div
+          id="course-details"
+          style="display: none"
+          class="animate-in stagger-1"
+        >
+          <div class="course-details-grid">
+            <div class="glass-card">
+              <h2 id="detail-title" style="margin-bottom: 1rem">
+                Course Title
+              </h2>
+              <p
+                id="detail-desc"
+                style="color: var(--text-secondary); margin-bottom: 2rem"
+              >
+                Description
+              </p>
+
+              <h3 style="margin-bottom: 1.5rem">Curriculum</h3>
+              <div id="lesson-list"></div>
+            </div>
+
+            <div style="position: sticky; top: 120px; align-self: start">
+              <div class="glass-card text-center">
+                <h3 style="margin-bottom: 1rem">Progress</h3>
+                <div style="margin-bottom: 1.5rem">
+                  <span
+                    id="detail-progress-percent"
+                    style="
+                      font-size: 4rem;
+                      font-weight: 800;
+                      color: var(--primary);
+                    "
+                    >0%</span
+                  >
+                  <p
+                    id="detail-progress-status"
+                    style="font-size: 0.875rem; color: var(--text-muted)"
+                  >
+                    Start your learning journey!
+                  </p>
+                </div>
+                <div class="progress-track" style="margin-bottom: 2rem">
+                  <div
+                    id="detail-progress-bar"
+                    class="progress-fill"
+                    style="width: 0%"
+                  ></div>
+                </div>
+                <div
+                  id="completion-badge"
+                  class="glass-card"
+                  style="
+                    display: none;
+                    background: rgba(16, 185, 129, 0.1);
+                    border-color: var(--success);
+                    color: var(--success);
+                    padding: 1rem;
+                    margin-bottom: 1.5rem;
+                    font-weight: 700;
+                  "
+                >
+                  Course Completed!
+                </div>
+                <a href="Quiz.html" class="btn btn-primary" style="width: 100%"
+                  >Take Final Assessment</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container text-center">
+        <p>&copy; 2026 LearnerPro Ultra-Premium. Success starts here.</p>
+      </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/logic.js"></script>
+    <script>
+      let currentCourseId = null;
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const tableBody = document.getElementById("course-table-body");
+
+        courseData.forEach((course) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+                    <td style="padding-left: 2rem;">
+                        <div style="font-weight: 700; color: var(--text-primary);">${
+                          course.title
+                        }</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">${course.description.substring(
+                          0,
+                          60
+                        )}...</div>
+                    </td>
+                    <td><span class="category-badge">${
+                      course.category
+                    }</span></td>
+                    <td style="color: var(--text-secondary);">${
+                      course.lessons.length
+                    } Lessons</td>
+                    <td style="text-align: right; padding-right: 2rem;">
+                        <button class="btn btn-outline btn-sm" onclick="showDetails('${
+                          course.id
+                        }')">Curriculum</button>
+                    </td>
+                `;
+          tableBody.appendChild(row);
+        });
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get("id");
+        if (id) showDetails(id);
+      });
+
+      function showDetails(id) {
+        currentCourseId = id;
+        const course = courseData.find((c) => c.id === id);
+
+        document.getElementById("course-details").style.display = "block";
+        document.getElementById("detail-title").innerText = course.title;
+        document.getElementById("detail-desc").innerText = course.description;
+
+        renderLessons(course);
+        updateProgressUI(course);
+
+        document
+          .getElementById("course-details")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function renderLessons(course) {
+        const lessonList = document.getElementById("lesson-list");
+        lessonList.innerHTML = "";
+
+        course.lessons.forEach((lesson, index) => {
+          const isDone = isLessonCompleted(course.id, index);
+          const item = document.createElement("div");
+          item.className = `lesson-item ${isDone ? "completed" : ""}`;
+          item.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <span style="font-size: 1.25rem; font-weight: 800; color: var(--text-muted); min-width: 2rem;">${String(
+                          index + 1
+                        ).padStart(2, "0")}</span>
+                        <span class="lesson-title" style="font-weight: 600;">${lesson}</span>
+                    </div>
+                    <button class="btn btn-sm ${
+                      isDone ? "btn-outline" : "btn-primary"
+                    }" 
+                            onclick="toggleLesson('${course.id}', ${index}, ${
+            course.lessons.length
+          })">
+                        ${isDone ? "Done" : "Mark Lesson Complete"}
+                    </button>
+                `;
+          lessonList.appendChild(item);
+        });
+      }
+
+      function toggleLesson(courseId, lessonIndex, total) {
+        toggleLessonCompletion(courseId, lessonIndex, total);
+        const course = courseData.find((c) => c.id === courseId);
+        renderLessons(course);
+        updateProgressUI(course);
+      }
+
+      function updateProgressUI(course) {
+        const progress = getCourseProgress(course.id);
+        const percentEl = document.getElementById("detail-progress-percent");
+        const barEl = document.getElementById("detail-progress-bar");
+        const badge = document.getElementById("completion-badge");
+
+        percentEl.innerText = `${progress}%`;
+        barEl.style.width = `${progress}%`;
+
+        if (progress === 100) {
+          badge.style.display = "block";
+          document.getElementById("detail-progress-status").innerText =
+            "Course Mastered!";
+          percentEl.style.color = "var(--success)";
+          barEl.style.background = "var(--success)";
+        } else {
+          badge.style.display = "none";
+          document.getElementById("detail-progress-status").innerText =
+            "Keep going!";
+          percentEl.style.color = "var(--primary)";
+          barEl.style.background = "";
+        }
+      }
+    </script>
+  </body>
+</html>
