@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500;700&display=swap');
 
 :root {
-    
+
     --primary: #6366f1;
     --primary-alt: #4f46e5;
     --secondary: #d946ef;
@@ -10,22 +10,78 @@
     --warning: #f59e0b;
     --danger: #ef4444;
 
-    
+
     --bg-dark: #020617;
     --bg-card: rgba(15, 23, 42, 0.6);
     --bg-glass: rgba(30, 41, 59, 0.4);
 
-   
+
     --border-light: rgba(255, 255, 255, 0.08);
     --border-glow: rgba(99, 102, 241, 0.2);
     --shadow-premium: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
     --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.15);
 
-    
+
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
     --text-muted: #64748b;
 }
+
+/* ===== LIGHT MODE ===== */
+body[data-theme='light'] {
+    --bg-dark: #f1f5f9;
+    --bg-card: rgba(255, 255, 255, 0.75);
+    --bg-glass: rgba(226, 232, 240, 0.6);
+    --border-light: rgba(0, 0, 0, 0.08);
+    --border-glow: rgba(99, 102, 241, 0.25);
+    --shadow-premium: 0 20px 40px -15px rgba(0, 0, 0, 0.15);
+    --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.1);
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+}
+
+body[data-theme='light'] {
+    background-image:
+        radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 100% 100%, rgba(217, 70, 239, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(241, 245, 249, 1) 0%, transparent 100%);
+}
+
+body[data-theme='light'] header {
+    background: rgba(241, 245, 249, 0.85);
+}
+
+body[data-theme='light'] .navbar-brand {
+    background: linear-gradient(135deg, #0f172a 0%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ===== THEME TOGGLE BUTTON ===== */
+.theme-toggle {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-light);
+    border-radius: 50px;
+    cursor: pointer;
+    padding: 0.4rem 0.9rem;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.3s ease;
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+}
+
+.theme-toggle:hover {
+    border-color: var(--primary);
+    background: rgba(99, 102, 241, 0.1);
+}
+
+
 
 * {
     margin: 0;
