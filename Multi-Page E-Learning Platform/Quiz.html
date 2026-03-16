@@ -46,7 +46,10 @@
     <header>
         <div class="container navbar">
             <a href="index.html" class="navbar-brand">LearnerPro</a>
-            <ul class="nav-links">
+            <button class="hamburger" id="hamburger-btn" aria-label="Toggle menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
                 <li><a href="index.html" class="nav-link">Dashboard</a></li>
                 <li><a href="Courses.html" class="nav-link">Courses</a></li>
                 <li><a href="Quiz.html" class="nav-link active">Quiz</a></li>
@@ -55,6 +58,7 @@
             <button id="theme-toggle-btn" class="theme-toggle">☀️ Light</button>
         </div>
     </header>
+    <div class="nav-overlay" id="nav-overlay"></div>
 
     <div class="breadcrumb-container container">
         <ul class="breadcrumb">
