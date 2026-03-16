@@ -1,7 +1,7 @@
-// ===== THEME TOGGLE =====
+
 (function () {
     const savedTheme = localStorage.getItem('theme') || 'dark';
-    document.body.setAttribute('data-theme', savedTheme);
+    document.documentElement.setAttribute('data-theme', savedTheme);
 })();
 
 function initThemeToggle() {
@@ -9,7 +9,7 @@ function initThemeToggle() {
     if (!btn) return;
 
     function applyTheme(theme) {
-        document.body.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
         btn.textContent = theme === 'dark' ? '☀️ Light' : '🌙 Dark';
     }
@@ -19,7 +19,7 @@ function initThemeToggle() {
     btn.textContent = current === 'dark' ? '☀️ Light' : '🌙 Dark';
 
     btn.addEventListener('click', () => {
-        const next = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
         applyTheme(next);
     });
 }
