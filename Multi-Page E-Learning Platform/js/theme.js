@@ -1,6 +1,3 @@
-// ===== THEME TOGGLE =====
-// Apply theme immediately on <html> to prevent flash of wrong theme.
-// document.documentElement is always available even when script is in <head>.
 (function () {
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
