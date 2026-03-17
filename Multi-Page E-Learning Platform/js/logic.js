@@ -58,17 +58,17 @@ function loadState() {
   const state = localStorage.getItem(APP_STORAGE_KEY);
   const defaultState = {
     user: { name: "Learner", email: "learner@example.com" },
-    completedCourses: [], // Will store { id: 'js-basic', completedLessons: [0, 1] }
+    completedCourses: [], 
     quizResults: [],
   };
 
   if (!state) return defaultState;
   
   const parsed = JSON.parse(state);
-  // Migration: Ensure completedLessons array exists for each record
+ 
   if (parsed.completedCourses) {
     parsed.completedCourses = parsed.completedCourses.map(course => {
-      // If it's a legacy record or missing progress/lessons
+    
       if (!course.completedLessons) {
         course.completedLessons = [];
       }
@@ -97,7 +97,7 @@ function toggleLessonCompletion(courseId, lessonIndex, totalLessons) {
     courseRecord.completedLessons.push(lessonIndex); // Check
   }
 
-  // Calculate new progress percentage
+  
   courseRecord.progress = Math.round((courseRecord.completedLessons.length / totalLessons) * 100);
 
   saveState(state);
