@@ -40,7 +40,8 @@ Multi-Page E-Learning Platform/
 │   └── style.css          # Design system & responsive layouts
 ├── js/
 │   ├── data.js            # Content & Question repository
-│   └── logic.js           # Core state & business logic
+│   ├── logic.js           # Core state & business logic
+│   └── theme.js           # Dark/Light mode toggle system
 ├── tests/
 │   └── logic.test.js      # Jest unit tests (Logic validation)
 ├── Courses.html           # Dynamic catalog & curriculum
