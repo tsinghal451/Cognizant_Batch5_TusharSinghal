@@ -1,6 +1,6 @@
 # Multi-Page E-Learning Platform
 
-**Live Demo:** [[https://e-learningplatformproject.netlify.app/](https://e-learningplatformproject.netlify.app/)](https://e-learning-platformproject.netlify.app/)
+**Live Demo:** [[https://e-learning-platformproject.netlify.app/](https://e-learning-platformproject.netlify.app/)](https://e-learning-platformproject.netlify.app/)
 
 A premium, responsive web-based learning management system designed for excellence. This platform provides a seamless learning journey with intuitive navigation, real-time progress tracking, and interactive assessments—all built with a focus on clean code and robust architecture.
 
