@@ -11,16 +11,18 @@
     <header>
         <div class="container navbar">
             <a href="index.html" class="navbar-brand">LearnerPro</a>
-            <button class="hamburger" id="hamburger-btn" aria-label="Toggle menu" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
             <ul class="nav-links" id="nav-links">
                 <li><a href="index.html" class="nav-link">Dashboard</a></li>
                 <li><a href="Courses.html" class="nav-link">Courses</a></li>
                 <li><a href="Quiz.html" class="nav-link">Quiz</a></li>
                 <li><a href="Profile.html" class="nav-link active">Profile</a></li>
             </ul>
-            <button id="theme-toggle-btn" class="theme-toggle">☀️ Light</button>
+            <div class="nav-controls">
+                <button id="theme-toggle-btn" class="theme-toggle">☀️ Light</button>
+                <button class="hamburger" id="hamburger-btn" aria-label="Toggle menu" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
         </div>
     </header>
     <div class="nav-overlay" id="nav-overlay"></div>
@@ -67,7 +69,7 @@
             </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;" class="animate-in stagger-2">
+        <div class="profile-content-grid animate-in stagger-2">
             <!-- Learning Achievements -->
             <section>
                 <h3 style="font-size: 1.75rem; margin-bottom: 1.5rem;">Learning Progress</h3>
